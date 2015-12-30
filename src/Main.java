@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Main 
 {
@@ -5,9 +6,9 @@ public class Main
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
-
-		System.out.println("remy"); //le meilleur
-		System.out.println("christophe");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Veuillez saisir une expression :");
+		String str = sc.nextLine();
 	}
 
 }
