@@ -8,10 +8,12 @@ class Evaluator implements Expression {
     public Evaluator(String expression) {
         Stack<Expression> expressionStack = new Stack<Expression>();
         for (String token : expression.split(" ")) {
-            if  (token.equals("+")) {
+            //vérifie s'il y a un + dans l'équation
+        	if  (token.equals("+")) {
                 Expression addExpression = new Plus(expressionStack.pop(), expressionStack.pop());
                 expressionStack.push( addExpression );
             }
+        	//vérifie s'il y a un - dans l'équation
             else if (token.equals("-")) {
                 // it's necessary remove first the right operand from the stack
                 Expression right = expressionStack.pop();
