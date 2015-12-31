@@ -8,7 +8,35 @@ class Evaluator implements Expression {
     public Evaluator(String expression) {
         Stack<Expression> expressionStack = new Stack<Expression>();
         for (String token : expression.split(" ")) {
-            //vérifie s'il y a un + dans l'équation
+            switch(token)
+            {
+            	case "+":
+            		Expression addExpression = new Plus(expressionStack.pop(), expressionStack.pop());
+                    expressionStack.push( addExpression );
+                    break;
+                    
+            	case "-":
+            		// it's necessary remove first the right operand from the stack
+                    Expression right = expressionStack.pop();
+                    // ..and after the left one
+                    Expression left = expressionStack.pop();
+                    Expression subExpression = new Minus(left, right);
+                    expressionStack.push( subExpression );
+                    
+            	case "if":
+            		//Il faut vérifier que la condition est bien formée
+            		Expression right = expressionStack.pop();
+            		//vérifier qu'il y a then et else
+            		
+            		break;
+            	
+            	default:
+            		expressionStack.push ( new Variable(token) );
+            }
+        	/**
+        	 * Version if else de Clément
+        	 * 
+        	//vérifie s'il y a un + dans l'équation
         	if  (token.equals("+")) {
                 Expression addExpression = new Plus(expressionStack.pop(), expressionStack.pop());
                 expressionStack.push( addExpression );
@@ -24,7 +52,7 @@ class Evaluator implements Expression {
             }
             else                        
                 expressionStack.push( new Variable(token) );
-        }
+        }**/
         syntaxTree = expressionStack.pop();
     }
  
