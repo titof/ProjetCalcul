@@ -22,11 +22,33 @@ class Evaluator implements Expression {
                     Expression left = expressionStack.pop();
                     Expression subExpression = new Minus(left, right);
                     expressionStack.push( subExpression );
+                    break;
                     
             	case "if":
             		//Il faut vérifier que la condition est bien formée
             		Expression right = expressionStack.pop();
-            		//vérifier qu'il y a then et else
+            		Pattern p=Pattern.compile("(.*)then(.*)else(.*).*");
+            		Matcher m=p.matcher(right);
+            		String If = null;
+            		String Then = null;
+            		String Else = null;
+            		while(m.find()) 
+            		{
+            			If = m.group(1).substring(m.group(1).indexOf('(')+1, m.group(1).indexOf(')'));
+            			Then = m.group(2).substring(m.group(2).indexOf('(')+1, m.group(2).indexOf(')'));;
+            			Else = m.group(3).substring(m.group(3).indexOf('(')+1, m.group(3).indexOf(')'));;
+            		}
+            		//Si la condition est bien écrite
+            		if(If != null && Then != null && Else != null)
+            		{
+            			//Interpréter la condition
+            			Expression condition = new Condition(If,Then,Else);
+            			expressionStack.push( condition );
+            		}
+            		else
+            		{
+            			System.out.println("Erreur: condtion mal formée");
+            		}
             		
             		break;
             	
