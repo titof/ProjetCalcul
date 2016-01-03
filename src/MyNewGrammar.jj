@@ -1,0 +1,112 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
+ */
+
+PARSER_BEGIN(EG1)
+
+public class EG1
+{}
+
+PARSER_END(EG1)
+
+SKIP :
+{
+ "\r"
+| "\t"
+| "\n"
+}
+
+TOKEN : /* OPERATORS */
+{
+  < PLUS : "+" >
+| < MINUS : "-" >
+| < TIMES : "*" >
+| < DIVIDE : "/" >
+| < RECURSION : "rec" >
+| < POINT : "." >
+| < SPACE : " " >
+| < IF : "if" >
+| < THEN : "then" >
+| < ELSE : "else" >
+| < EGAL : "=" >
+}
+
+TOKEN :
+{
+  < NUMBER : (<DIGIT>)+  >
+| 
+  < VARIABLE : <LETTER>|< LAMBDA > (< LETTER >|< DIGIT >|< LAMBDA >)*  >
+|
+  < LEFT_PAREN : "(" >
+|
+  < RIGHT_PAREN : ")" >
+
+}
+
+TOKEN :
+{
+  <#DIGIT: ["0"-"9"]>
+| <#LETTER: ["a"-"z", "A"-"Z"]>
+| <#LAMBDA : "!" >
+}
+
+int start() :
+{}
+{
+  wff()   // "well formed formula"  
+  {
+    return 0;  // returns 0 on successful parse
+  }
+}
+
+  
+void wff() :
+{}
+{
+  term() 
+    (
+      binary_operator() term()
+    )*
+}
+
+void term() :
+{}
+{
+  symbol()  
+|
+  < LEFT_PAREN > wff() < RIGHT_PAREN >
+|
+  < MINUS > term()  // Unary minus
+|
+  < RECURSION >|< IF > (term())*
+}
+
+void binary_operator() :
+{}
+{
+  < PLUS >
+| < MINUS >  // binary minus
+| < TIMES >
+| < DIVIDE >
+| < RECURSION >
+| < POINT >
+| < SPACE >
+| < IF >
+| < THEN >
+| < ELSE >
+| < EGAL >
+}
+  
+
+void symbol() :
+{Token t;
+}
+{
+  t= < NUMBER >
+  {
+    // Not necessary for parser construction - debugging code
+    System.out.println("matched number: "+t);
+  }
+| 
+  t= < VARIABLE >  {System.out.println("matched variable: "+t);}
+}
