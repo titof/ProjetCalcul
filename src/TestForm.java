@@ -31,7 +31,7 @@ public class TestForm {
         
         //make sure the program exits when the frame closes
         guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        guiFrame.setTitle("Example GUI");
+        guiFrame.setTitle("Graphical User Interface");
         guiFrame.setSize(300,600);
       
         //This will center the JFrame in the middle of the screen
