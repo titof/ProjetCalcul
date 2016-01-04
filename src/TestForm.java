@@ -23,9 +23,20 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TestForm.
+ */
 public class TestForm {
+	
+	/** The parser. */
 	static Main parser = null;
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		JFrame guiFrame = new JFrame();
         

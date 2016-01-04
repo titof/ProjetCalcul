@@ -67,10 +67,13 @@ public class Main
 						BufferedReader br = new BufferedReader(fr);
 						String chaine="";
 						String ligne;
+						
+						Main parser = new Main(new java.io.StringReader(""));
+					
 						while ((ligne=br.readLine())!=null){
 							String sentence = ligne;
-							Main parser = new Main(new java.io.StringReader(sentence));
-                           	parser.ReInit(new java.io.StringReader(sentence));
+					
+							parser.ReInit(new java.io.StringReader(sentence));			
 							inputText.setText(sentence);
 			                // Put parens around sentence so that parser knows scope
 			                sentence = "(" + sentence + ")";
@@ -124,7 +127,7 @@ public class Main
                  
                     outputText.setText("expression parsed ok.");
                 	SimpleNode root = parser.start();
-                	root.dump("");
+                	//root.dump("");
                 
                   
                   
@@ -214,7 +217,7 @@ int start() #START :
   }
 }
 
-void term() #VAR :
+void term() #VOID :
 {}
 {
   symbol()  
@@ -245,7 +248,7 @@ void binary_operator() #OPERATEUR :
 }
   
 
-void symbol() #ID :
+void symbol() #VARouNBR :
 {Token t;
 }
 {

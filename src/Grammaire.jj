@@ -71,10 +71,13 @@ public class Main/*@bgen(jjtree)*/implements MainTreeConstants/*@egen*/
 						BufferedReader br = new BufferedReader(fr);
 						String chaine="";
 						String ligne;
+						
+						Main parser = new Main(new java.io.StringReader(""));
+					
 						while ((ligne=br.readLine())!=null){
 							String sentence = ligne;
-							Main parser = new Main(new java.io.StringReader(sentence));
-                           	parser.ReInit(new java.io.StringReader(sentence));
+					
+							parser.ReInit(new java.io.StringReader(sentence));			
 							inputText.setText(sentence);
 			                // Put parens around sentence so that parser knows scope
 			                sentence = "(" + sentence + ")";
@@ -128,7 +131,7 @@ public class Main/*@bgen(jjtree)*/implements MainTreeConstants/*@egen*/
                  
                     outputText.setText("expression parsed ok.");
                 	SimpleNode root = parser.start();
-                	root.dump("");
+                	//root.dump("");
                 
                   
                   
@@ -249,13 +252,13 @@ int start()        :
 /*@egen*/
 }
 
-void term()      :
-{/*@bgen(jjtree) VAR */
-  SimpleNode jjtn000 = new SimpleNode(JJTVAR);
+void term()       :
+{/*@bgen(jjtree) VOID */
+  SimpleNode jjtn000 = new SimpleNode(JJTVOID);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
-{/*@bgen(jjtree) VAR */
+{/*@bgen(jjtree) VOID */
   try {
 /*@egen*/
   symbol()  
@@ -318,14 +321,14 @@ void binary_operator()            :
 }
   
 
-void symbol()     :
-{/*@bgen(jjtree) ID */
- SimpleNode jjtn000 = new SimpleNode(JJTID);
+void symbol()           :
+{/*@bgen(jjtree) VARouNBR */
+ SimpleNode jjtn000 = new SimpleNode(JJTVAROUNBR);
  boolean jjtc000 = true;
  jjtree.openNodeScope(jjtn000);
 /*@egen*/Token t;
 }
-{/*@bgen(jjtree) ID */
+{/*@bgen(jjtree) VARouNBR */
   try {
 /*@egen*/
   t= < NUMBER >/*@bgen(jjtree)*/
