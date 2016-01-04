@@ -7,13 +7,13 @@ class SimpleNode implements Node {
   protected Node[] children;
   protected int id;
   protected Object value;
-  protected EG1 parser;
+  protected Main parser;
 
   public SimpleNode(int i) {
     id = i;
   }
 
-  public SimpleNode(EG1 p, int i) {
+  public SimpleNode(Main p, int i) {
     this(i);
     parser = p;
   }
@@ -55,7 +55,7 @@ class SimpleNode implements Node {
      toString(String), otherwise overriding toString() is probably all
      you need to do. */
 
-  public String toString() { return EG1TreeConstants.jjtNodeName[id]; }
+  public String toString() { return MainTreeConstants.jjtNodeName[id]; }
   public String toString(String prefix) { return prefix + toString(); }
 
   /* Override this method if you want to customize how the node dumps
@@ -74,4 +74,4 @@ class SimpleNode implements Node {
   }
 }
 
-/* JavaCC - OriginalChecksum=6f66758d8d4eaa200e265a16ca90a1ac (do not edit this line) */
+/* JavaCC - OriginalChecksum=a7442abed49daa4e8be3f899e266d239 (do not edit this line) */

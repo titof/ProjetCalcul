@@ -24,7 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class TestForm {
-	static EG1 parser = null;
+	static Main parser = null;
 	
 	public static void main(String[] args) {
 		JFrame guiFrame = new JFrame();
@@ -90,8 +90,8 @@ public class TestForm {
 			                // Put parens around sentence so that parser knows scope
 			                sentence = "(" + sentence + ")";
 			                InputStream is = new ByteArrayInputStream(sentence.getBytes());
-			                if(parser == null) parser = new EG1(is);
-			                else EG1.ReInit(is);
+			                if(parser == null) parser = new Main(is);
+			                else Main.ReInit(is);
 			                try
 			                {
 			             /*     switch (EG1.start())
@@ -135,8 +135,8 @@ public class TestForm {
                 // Put parens around sentence so that parser knows scope
                 sentence = "(" + sentence + ")";
                 InputStream is = new ByteArrayInputStream(sentence.getBytes());
-                if(parser == null) parser = new EG1(is);
-                else EG1.ReInit(is);
+                if(parser == null) parser = new Main(is);
+                else Main.ReInit(is);
                 try
                 {
                   /*switch (EG1.start())
