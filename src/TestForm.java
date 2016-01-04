@@ -94,14 +94,14 @@ public class TestForm {
 			                else EG1.ReInit(is);
 			                try
 			                {
-			                  switch (EG1.start())
+			             /*     switch (EG1.start())
 			                  {
 			                    case 0 :
 			                    	outputText.setText("expression parsed ok.");
 			                    break;
 			                    default :
 			                    break;
-			                  }
+			                  }*/
 			                }
 			                catch (Exception e)
 			                {
@@ -139,14 +139,14 @@ public class TestForm {
                 else EG1.ReInit(is);
                 try
                 {
-                  switch (EG1.start())
+                  /*switch (EG1.start())
                   {
                     case 0 :
                     	outputText.setText("expression parsed ok.");
                     break;
                     default :
                     break;
-                  }
+                  }*/
                 }
                 catch (Exception e)
                 {

@@ -5,7 +5,15 @@
 PARSER_BEGIN(EG1)
 
 public class EG1
-{}
+{
+   public static void main(String[] args) throws ParseException {
+    Scanner sc = new Scanner(System.in);
+    String text = sc.nextLine();
+	EG1 parser = new EG1(new java.io.StringReader(text));
+	SimpleNode root = parser.start();
+    root.dump("");
+  }
+}
 
 PARSER_END(EG1)
 
@@ -29,13 +37,14 @@ TOKEN : /* OPERATORS */
 | < THEN : "then" >
 | < ELSE : "else" >
 | < EGAL : "=" >
+| < LAMBDA : "!" >
 }
 
 TOKEN :
 {
   < NUMBER : (<DIGIT>)+  >
 | 
-  < VARIABLE : <LETTER>|< LAMBDA > (< LETTER >|< DIGIT >|< LAMBDA >)*  >
+  < VARIABLE : <LETTER> (< LETTER >|< DIGIT >)*  >
 |
   < LEFT_PAREN : "(" >
 |
@@ -43,45 +52,39 @@ TOKEN :
 
 }
 
+
 TOKEN :
 {
   <#DIGIT: ["0"-"9"]>
 | <#LETTER: ["a"-"z", "A"-"Z"]>
-| <#LAMBDA : "!" >
 }
 
-int start() :
+int start() #START :
 {}
 {
-  wff()   // "well formed formula"  
+   term() 
+    (
+      binary_operator() term()
+    )*   // "well formed formula"  
   {
     return 0;  // returns 0 on successful parse
   }
 }
 
-  
-void wff() :
-{}
-{
-  term() 
-    (
-      binary_operator() term()
-    )*
-}
-
-void term() :
+void term() #VAR :
 {}
 {
   symbol()  
 |
-  < LEFT_PAREN > wff() < RIGHT_PAREN >
+  < LEFT_PAREN >  term()(binary_operator() term())* < RIGHT_PAREN >
 |
-  < MINUS > term()  // Unary minus
+  < MINUS >|< LAMBDA > term()  // Unary minus
 |
-  < RECURSION >|< IF > (term())*
+  binary_operator() (term())*
+
 }
 
-void binary_operator() :
+void binary_operator() #OPERATEUR :
 {}
 {
   < PLUS >
@@ -90,15 +93,16 @@ void binary_operator() :
 | < DIVIDE >
 | < RECURSION >
 | < POINT >
-| < SPACE >
 | < IF >
 | < THEN >
 | < ELSE >
 | < EGAL >
+| < SPACE >
+| < LAMBDA >
 }
   
 
-void symbol() :
+void symbol() #ID :
 {Token t;
 }
 {
