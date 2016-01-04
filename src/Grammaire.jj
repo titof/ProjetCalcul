@@ -14,154 +14,153 @@ public class Main/*@bgen(jjtree)*/implements MainTreeConstants/*@egen*/
 	
 	public static void main(String[] args) {
 		JFrame guiFrame = new JFrame();
-        
+
         //make sure the program exits when the frame closes
         guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        guiFrame.setTitle("Graphical User Interface");
+        guiFrame.setTitle("Interpreteur Lambda");
         guiFrame.setSize(300,600);
-      
+
         //This will center the JFrame in the middle of the screen
         guiFrame.setLocationRelativeTo(null);
-        
+
         //The first JPanel contains a label and text field for entering the expression
         final JPanel inputPanel = new JPanel();
-        JLabel inputLbl = new JLabel("Enter your Expression: ");
+        JLabel inputLbl = new JLabel("Entrer votre expression: ");
         final JTextField inputText = new JTextField("");
         inputText.setColumns(20);
-        
+
         inputPanel.add(inputLbl);
         inputPanel.add(inputText);
-        
-		// The bottom Panel contains a text box for showing results of a parse
+
+                // The bottom Panel contains a text box for showing results of a parse
         final JTextArea outputText = new JTextArea();
         outputText.setColumns(20);
         outputText.setRows(10);
 
-                     
-        
+
+
         JPanel mainPanel = new JPanel();
         mainPanel.add(inputPanel);
         mainPanel.add(outputText);
-        
+
         //Christophe
         JMenuBar bar = new JMenuBar();
         JMenu menu = new JMenu("File");
         JMenuItem file = new JMenuItem("S\u00e9lectionner un fichier");
-        
+
         menu.add(file);
         bar.add(menu);
         guiFrame.setJMenuBar(bar);
-        
+
         final JFileChooser fileChooser = new javax.swing.JFileChooser();
         fileChooser.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
-        
+
         file.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	   
-            	int returnVal = fileChooser.showOpenDialog(guiFrame);
 
-            	if (returnVal == JFileChooser.APPROVE_OPTION) {
-            		File selectedFile = fileChooser.getSelectedFile();
-            		
-            		try {
-						InputStream f = new FileInputStream(selectedFile);
-						
-						InputStreamReader fr = new InputStreamReader(f);
-						
-						BufferedReader br = new BufferedReader(fr);
-						String chaine="";
-						String ligne;
-						
-						Main parser = new Main(new java.io.StringReader(""));
-					
-						while ((ligne=br.readLine())!=null){
-							String sentence = ligne;
-					
-							parser.ReInit(new java.io.StringReader(sentence));			
-							inputText.setText(sentence);
-			                // Put parens around sentence so that parser knows scope
-			                sentence = "(" + sentence + ")";
-			                InputStream is = new ByteArrayInputStream(sentence.getBytes());
-			                if(parser == null) parser = new Main(is);
-			                else Main.ReInit(is);
-			                try
-			                {
-			                  	outputText.setText("expression parsed ok.");
-                				SimpleNode root = parser.start();
-                				root.dump("");
-			                }
-			                catch (Exception e)
-			                {
-			                  outputText.setText("error in expression.\n"+
-			                		  				e.getMessage());
-			                }
-			                catch (Error e)
-			                {
-			                 outputText.setText("error in expression.\n"+
-			    		  						   e.getMessage());
-			                }
-			                finally
-			                {
-			                  
-			                }
-							chaine+=ligne+"\n";
-						}
-						
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-            	}
-            }       
+                int returnVal = fileChooser.showOpenDialog(guiFrame);
+                String fin="";
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+
+                        try {
+                                                InputStream f = new FileInputStream(selectedFile);
+
+                                                InputStreamReader fr = new InputStreamReader(f);
+
+                                                BufferedReader br = new BufferedReader(fr);
+                                                String chaine="";
+                                                String ligne;
+
+                                               
+                                                while ((ligne=br.readLine())!=null){
+                                                        String sentence = ligne;
+
+                                  
+
+                                                        inputText.setText(sentence);
+                                        // Put parens around sentence so that parser knows scope
+                                        sentence = "(" + sentence + ")";
+                                        InputStream is = new ByteArrayInputStream(sentence.getBytes());
+                                        if(parser == null) parser = new Main(new java.io.StringReader(sentence));
+                                        else parser.ReInit(new java.io.StringReader(sentence));
+                                        try
+                                        {
+                                                outputText.setText("expression reconnue ok.");
+                                                SimpleNode root = parser.start();
+                                                fin+="\n"+root.dump("")+"";
+                                                
+                                        }
+                                        catch (Exception e)
+                                        {
+                                          outputText.setText("erreur dans l'expression.\n"+
+                                                                                        e.getMessage());
+                                        }
+                                        catch (Error e)
+                                        {
+                                         outputText.setText("erreur dans l'expression.\n"+
+                                                                                           e.getMessage());
+                                        }
+                                        finally
+                                        {
+
+                                        }
+                                                        chaine+=ligne+"\n";
+                                                }
+                                                outputText.setText(fin);
+
+                                        } catch (IOException e) {
+                                                e.printStackTrace();
+                                        }
+                }
+            }
+            
         });
-        
-     
+
+
         // Textfield Action Listener callback - executed when user hits "return"
         inputText.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent evt) {
-        	  	String sentence = inputText.getText();
-        	  	Main parser = new Main(new java.io.StringReader(sentence));
-                
+                public void actionPerformed(ActionEvent evt) {
+                        String sentence = inputText.getText();
+                        ;
+
                 // Put parens around sentence so that parser knows scope
-                sentence = "(" + sentence + ")";
+                //sentence = "(" + sentence + ")";
                 InputStream is = new ByteArrayInputStream(sentence.getBytes());
-                if(parser == null) parser = new Main(is);
-                else Main.ReInit(is);
+                if(parser == null) parser = new Main(new java.io.StringReader(sentence));
+                else parser.ReInit(new java.io.StringReader(sentence));
                 try
                 {
-                 
-                    outputText.setText("expression parsed ok.");
-                	SimpleNode root = parser.start();
-                	//root.dump("");
-                
-                  
-                  
+                    	outputText.setText("expression reconnue ok.");
+                        SimpleNode root = parser.start();
+                        outputText.setText(root.dump(""));
                 }
                 catch (Exception e)
                 {
-                  outputText.setText("error in expression.\n"+
-                		  				e.getMessage());
+                  outputText.setText("erreur dans l'expression.\n"+
+                                                                e.getMessage());
                 }
                 catch (Error e)
                 {
-                 outputText.setText("error in expression.\n"+
-    		  						   e.getMessage());
+                 outputText.setText("erreur dans l'expression.\n"+
+                                                                   e.getMessage());
                 }
                 finally
                 {
-                  
+
                 }
-        	}
+                }
         });
 
         guiFrame.add(mainPanel, BorderLayout.NORTH);
         guiFrame.add(outputText, BorderLayout.CENTER);
         // Layout all component panels
         guiFrame.pack();
-        
+
         //make sure the JFrame is visible
         guiFrame.setVisible(true);
-	//AST
-	
+
+
   }
 }
 
